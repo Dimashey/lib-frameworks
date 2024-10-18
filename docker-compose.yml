@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  db:
+    container_name: database
+    image: postgres:17-alpine
+    env_file: ./environment/.env.database
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - server-db
+
   server:
     container_name: server_dev
     env_file: ./environment/.env.server
@@ -12,6 +23,11 @@ services:
       - /app/server/node_modules
     ports:
       - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - server-db
+      - client-server
 
   client:
     container_name: client_dev
@@ -26,3 +42,14 @@ services:
       - "4200:4200"
     depends_on:
       - server
+    networks:
+      - client-server
+
+networks:
+  client-server:
+    driver: bridge
+  server-db:
+    driver: bridge
+
+volumes:
+  db_data:
