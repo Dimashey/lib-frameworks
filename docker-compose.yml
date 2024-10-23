@@ -14,13 +14,14 @@ services:
 
   server:
     container_name: server_dev
-    env_file: ./environment/.env.server
+    env_file:
+      - ./environment/.env.server
+      - ./environment/.env.database
     build:
       context: ./server
       dockerfile: Dockerfile.dev
     volumes:
       - ./server:/app/server
-      - /app/server/node_modules
     ports:
       - "8080:8080"
     depends_on:
