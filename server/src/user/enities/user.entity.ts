@@ -9,6 +9,6 @@ export class UserEntity implements UserModel {
   @PrimaryColumn('varchar')
   username: string;
 
-  @Column('varchar')
+  @Column('varchar', { select: false })
   password: string;
 }

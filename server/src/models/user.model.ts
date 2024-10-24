@@ -3,3 +3,5 @@ export interface UserModel {
   username: string;
   password: string;
 }
+
+export interface PublicUserModel extends Omit<UserModel, 'password'> {}

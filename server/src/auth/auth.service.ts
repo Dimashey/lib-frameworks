@@ -1,13 +1,10 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { CreateUserDto, CreateUserResponse } from './dto/create-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { CredentialsDto, LogInResponse } from './dto/log-in.dto';
+import { LogInResponse } from './dto/log-in.dto';
 import { validatePassword } from 'utils/hash';
+import { PublicUserModel } from 'src/models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -16,10 +13,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  private async generateAccessToken(username: string): Promise<string> {
-    return this.jwtService.signAsync({
-      username: username,
-    });
+  private async generateAccessToken(user: PublicUserModel): Promise<string> {
+    return this.jwtService.signAsync(user);
   }
 
   public async singUp(user: CreateUserDto): Promise<CreateUserResponse> {
@@ -31,7 +26,9 @@ export class AuthService {
 
     const newUser = await this.userService.create(user);
 
-    const accessToken = await this.generateAccessToken(user.username);
+    const { password, ...result } = newUser;
+
+    const accessToken = await this.generateAccessToken(result);
 
     return {
       message: 'User created successfully',
@@ -40,23 +37,25 @@ export class AuthService {
     };
   }
 
-  public async login(credentials: CredentialsDto): Promise<LogInResponse> {
-    const user = await this.userService.findByUsername(credentials.username);
+  public async validateUser(
+    username: string,
+    password: string,
+  ): Promise<PublicUserModel | null> {
+    const user = await this.userService.findByUsername(username);
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
+    if (!user) return null;
 
-    const isValidPassword = await validatePassword(
-      credentials.password,
-      user.password,
-    );
+    const isValidPassword = await validatePassword(password, user.password);
 
-    if (!isValidPassword) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
+    if (!isValidPassword) return null;
 
-    const accessToken = await this.generateAccessToken(user.username);
+    const { password: p, ...result } = user;
+
+    return result;
+  }
+
+  public async login(user: PublicUserModel): Promise<LogInResponse> {
+    const accessToken = await this.generateAccessToken(user);
 
     return { userId: user.id, accessToken };
   }

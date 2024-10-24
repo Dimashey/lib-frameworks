@@ -1,7 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { CredentialsDto } from './dto/log-in.dto';
+import { LogInResponse } from './dto/log-in.dto';
+import { CredentialsGuard } from './guards/credentials.guard';
+import { PublicUserModel } from 'src/models/user.model';
+import { User } from 'src/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -12,8 +15,9 @@ export class AuthController {
     return this.authService.singUp(user);
   }
 
+  @UseGuards(CredentialsGuard)
   @Post('login')
-  public login(@Body() credentials: CredentialsDto) {
-    return this.authService.login(credentials);
+  public login(@User() user: PublicUserModel): Promise<LogInResponse> {
+    return this.authService.login(user);
   }
 }
