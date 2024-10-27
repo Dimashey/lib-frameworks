@@ -38,7 +38,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./client:/app/client
-      - client_node_modules:/app/client/node_modules
+      - /app/client/node_modules
     ports:
       - "4200:4200"
     depends_on:
@@ -54,4 +54,3 @@ networks:
 
 volumes:
   db_data:
-  client_node_modules:
