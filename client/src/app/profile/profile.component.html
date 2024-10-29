@@ -1,1 +1,5 @@
-<p>profile works!</p>
+@if ($profile | async; as profile) {
+    <h1>Welcom back <i>{{profile.username}}</i></h1>
+} @else {
+    <mat-spinner/>
+}
