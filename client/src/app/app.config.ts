@@ -8,8 +8,8 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { API_ENDPOINT_PROVIDER } from './providers/environment';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { API_ENDPOINT_PROVIDER } from 'providers/environment';
+import { AuthInterceptor } from 'app/auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

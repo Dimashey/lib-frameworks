@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import { API_ENDPOINT } from '../config/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { LoginDto, LoginReponse } from './auth.types';
-import { User } from '../models/user.model';
+import { User } from 'models/user.model';
+import { API_ENDPOINT } from 'config/environment';
 
 @Injectable({
   providedIn: 'root',

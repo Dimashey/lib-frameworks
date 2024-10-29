@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from 'app/auth/auth.service';
 import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { User } from 'models/user.model';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

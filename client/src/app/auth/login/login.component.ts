@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCardContent, MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { AuthModule } from '../auth.module';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthModule } from 'app/auth/auth.module';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
   selector: 'app-login',
