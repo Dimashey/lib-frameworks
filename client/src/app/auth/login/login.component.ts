@@ -4,6 +4,7 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { AuthModule } from '../auth.module';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,11 +25,16 @@ export class LoginComponent {
   user: string = '';
   password: string = '';
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) {}
 
   login() {
     const data = { username: this.user, password: this.password };
 
-    this.authService.login(data).subscribe((d) => console.log(d));
+    this.authService.login(data).subscribe({
+      next: () => this.router.navigate(['profile']),
+    });
   }
 }
