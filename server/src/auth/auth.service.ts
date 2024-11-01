@@ -26,14 +26,9 @@ export class AuthService {
 
     const newUser = await this.userService.create(user);
 
-    const { password, ...result } = newUser;
-
-    const accessToken = await this.generateAccessToken(result);
-
     return {
       message: 'User created successfully',
       userId: newUser.id,
-      accessToken,
     };
   }
 
@@ -61,8 +56,8 @@ export class AuthService {
   }
 
   public async getMe(id: string): Promise<PublicUserModel> {
-    const user = await this.userService.getUser(id)
+    const user = await this.userService.getUser(id);
 
-    return user
+    return user;
   }
 }

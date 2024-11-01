@@ -11,7 +11,7 @@ import { AuthGuard } from './guards/auth.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('sing-up')
+  @Post('sign-up')
   public signUp(@Body() user: CreateUserDto) {
     return this.authService.singUp(user);
   }

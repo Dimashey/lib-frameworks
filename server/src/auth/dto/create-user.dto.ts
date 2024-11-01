@@ -18,5 +18,4 @@ export class CreateUserDto implements Pick<UserModel, 'password' | 'username'> {
 export class CreateUserResponse {
   message: string;
   userId: string;
-  accessToken: string;
 }
