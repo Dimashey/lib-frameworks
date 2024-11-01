@@ -9,4 +9,5 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   { path: 'sign-up', component: SignUpComponent, canActivate: [NotAuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'login'}
 ];
