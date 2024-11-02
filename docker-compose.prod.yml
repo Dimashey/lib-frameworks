@@ -1,0 +1,22 @@
+version: '3.8'
+name: lib-frameworks-prod
+
+services:
+  db:
+    container_name: database_prod
+
+  server:
+    container_name: server_prod
+    env_file:
+      - ./environment/.env.server
+      - ./environment/.env.database
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - server-db
+      - client-server

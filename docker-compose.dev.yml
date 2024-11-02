@@ -1,6 +1,10 @@
 version: '3.8'
+name: lib-frameworks-dev
 
 services:
+  db:
+    container_name: database_dev
+
   server:
     container_name: server_dev
     env_file:
