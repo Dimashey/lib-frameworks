@@ -8,15 +8,30 @@ services:
   server:
     container_name: server_prod
     env_file:
-      - ./environment/.env.server
       - ./environment/.env.database
     build:
       context: ./server
       dockerfile: Dockerfile.prod
+    volumes:
+      - ./server:/app/server
     ports:
       - "8080:8080"
     depends_on:
       - db
     networks:
       - server-db
+      - client-server
+
+  client:
+    container_name: client_prod
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./client:/app/client
+    ports:
+      - "4200:4200"
+    depends_on:
+      - server
+    networks:
       - client-server
