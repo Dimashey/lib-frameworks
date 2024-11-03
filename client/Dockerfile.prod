@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:20-alpine as base
+FROM node:20-alpine AS base
 
 RUN npm install -g angular-http-server
 
